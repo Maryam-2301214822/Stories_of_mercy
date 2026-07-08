@@ -46,12 +46,12 @@ comic_store
 - JavaScript
 ## رحساب المدير (Admin)
 -  Email:
-admin@gmail.com
+admin@example.com
 - Password:
  admin123
 ## Customer
 -  Email:
-user@gmail.com
+user@example.com
 - Password:
 123456
  
