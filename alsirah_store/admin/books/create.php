@@ -1,73 +1,247 @@
 <?php
-// تشغيل نظام مراقبة الأخطاء وعرضها على الشاشة لتسهيل تصليح الكود أثناء البرمجة
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
-session_start(); 
-// بدء أو استعادة الجلسة (الـ Session) لتمكين الموقع من تذكر بيانات المستخدم المتنقل بين الصفحات
+
+session_start();
+
 include "../../config/db.php";
-// حماية الصفحة: إذا لم يقم المستخدم بتسجيل الدخول، يتم طرده وتحويله لصفحة تسجيل الدخول
+
+
+// حماية الصفحة
 if (!isset($_SESSION['user_id'])) {
+
     header("Location: ../../login.php");
     exit();
+
 }
+
 
 $message = "";
 
+
 // جلب التصنيفات
-$categories = mysqli_query($conn, "SELECT * FROM categories");
+$categories = mysqli_query(
+    $conn,
+    "SELECT id, name FROM categories"
+);
+
+
 
 if (isset($_POST['save'])) {
-             //تغيير أو تعطيل أي رموز خاصة
-    $title = mysqli_real_escape_string($conn, $_POST['title']);
-    $author = mysqli_real_escape_string($conn, $_POST['author']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
-    $stock = mysqli_real_escape_string($conn, $_POST['stock']);
-    $category_id = mysqli_real_escape_string($conn, $_POST['category_id']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
+
 
     // =========================
-    // رفع الصورة
+    // استقبال وتنظيف البيانات
     // =========================
-$image = $_FILES['image']['name']; // جلب الاسم الأصلي للملف/الصورة المرفوعة من جهاز المستخدم    
-$tmp = $_FILES['image']['tmp_name']; // جلب المسار المؤقت للصورة على السيرفر لتجهيزها للنقل
-    $image_name = "";
-// التحقق مما إذا كان المستخدم قد اختار صورة للرفع ولم يترك الخانة فارغة
-    if (!empty($image)) {
-        
-        // 1. استخراج امتداد الصورة الأصلي (مثل: png أو jpg)
-        $image_ext = pathinfo($image, PATHINFO_EXTENSION);
-        
-        // 2. توليد اسم جديد وفريد للصورة بدمج (الوقت الحالي + رقم عشوائي + الامتداد) لمنع تداخل الأسماء
-        $image_name = time() . '_' . rand(100, 999) . '.' . $image_ext;
 
-        // 3. التأكد من وجود مجلد الرفع (uploads)، وإذا لم يكن موجوداً يتم إنشاؤه تلقائياً بصلاحيات كاملة
-        if (!file_exists("../../uploads")) {
-            mkdir("../../uploads", 0777, true);
+
+    $title = trim($_POST['title']);
+    $author = trim($_POST['author']);
+    $description = trim($_POST['description']);
+
+    $price = floatval($_POST['price']);
+    $stock = intval($_POST['stock']);
+    $category_id = intval($_POST['category_id']);
+
+
+
+    // =========================
+    // التحقق من البيانات
+    // =========================
+
+
+    if ($price < 0) {
+
+
+        $message = "❌ السعر يجب أن يكون أكبر من صفر";
+
+
+    } elseif ($stock < 0) {
+
+
+        $message = "❌ المخزون لا يمكن أن يكون رقمًا سالبًا";
+
+
+    } else {
+
+
+
+        // =========================
+        // رفع الصورة
+        // =========================
+
+
+        $image_name = "";
+
+
+        if (!empty($_FILES['image']['name'])) {
+
+
+
+            $image = $_FILES['image']['name'];
+            $tmp = $_FILES['image']['tmp_name'];
+            $image_size = $_FILES['image']['size'];
+
+
+
+            // استخراج الامتداد
+
+            $image_ext = strtolower(
+                pathinfo($image, PATHINFO_EXTENSION)
+            );
+
+
+
+            // الامتدادات المسموحة
+
+            $allowed = [
+                "jpg",
+                "jpeg",
+                "png",
+                "webp"
+            ];
+
+
+
+            if (!in_array($image_ext, $allowed)) {
+
+
+                $message =
+                "❌ يسمح فقط برفع صور JPG أو PNG أو WEBP";
+
+
+
+            } elseif ($image_size > 2 * 1024 * 1024) {
+
+
+                $message =
+                "❌ حجم الصورة يجب ألا يتجاوز 2MB";
+
+
+
+            } else {
+
+
+
+                // اسم جديد للصورة
+
+                $image_name =
+                time() . "_" . rand(100,999) . "." . $image_ext;
+
+
+
+                // إنشاء مجلد الصور
+
+                if (!file_exists("../../uploads")) {
+
+
+                    mkdir(
+                        "../../uploads",
+                        0755,
+                        true
+                    );
+
+
+                }
+
+
+
+                // نقل الصورة
+
+                move_uploaded_file(
+                    $tmp,
+                    "../../uploads/" . $image_name
+                );
+
+
+            }
+
+
         }
 
-        // 4. نقل الصورة من مسارها المؤقت على السيرفر إلى مجلد الرفع الدائم بالاسم الجديد
-        move_uploaded_file($tmp, "../../uploads/" . $image_name);
-    }
-    // =========================
-    // INSERT (بدون PDF)
-    // =========================
-// 1. كتابة أمر الـ SQL لإدخال بيانات الكتاب الجديد في جدول الكتب (books)
-    $query = "INSERT INTO books 
-    (title, author, description, price, stock, image, category_id)
-    VALUES 
-    ('$title', '$author', '$description', '$price', '$stock', '$image_name', '$category_id')";
 
-    // 2. إرسال الأمر وتنفيذه داخل قاعدة البيانات وفحص النتيجة
-    if (mysqli_query($conn, $query)) {
-        // إذا نجح الحفظ: يتم تحويل المستخدم فوراً لصفحة استعراض الكتب (index.php) وتوقف الكود
-        header("Location: index.php");
-        exit();
-    } else {
-        // إذا فشل الحفظ: يتم تخزين نص الخطأ القادم من الداتابيز في متغير $message لعرضه للمستخدم
-        $message = "❌ خطأ في إضافة الكتاب: " . mysqli_error($conn);
+
+
+
+        // =========================
+        // إدخال الكتاب في قاعدة البيانات
+        // =========================
+
+
+        if ($message == "") {
+
+
+
+            $query = "
+            INSERT INTO books
+            (
+                title,
+                author,
+                description,
+                price,
+                stock,
+                image,
+                category_id
+            )
+            VALUES
+            (?,?,?,?,?,?,?)
+            ";
+
+
+
+            $stmt = mysqli_prepare(
+                $conn,
+                $query
+            );
+
+
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sssdisi",
+                $title,
+                $author,
+                $description,
+                $price,
+                $stock,
+                $image_name,
+                $category_id
+            );
+
+
+
+            if (mysqli_stmt_execute($stmt)) {
+
+
+                header("Location: index.php");
+                exit();
+
+
+
+            } else {
+
+
+                $message =
+                "❌ خطأ في إضافة الكتاب: "
+                . mysqli_error($conn);
+
+
+            }
+
+
+
+            mysqli_stmt_close($stmt);
+
+
+
+        }
+
+
+
     }
+
+
 }
+
 ?>
 
 <!DOCTYPE html>
