@@ -2,18 +2,16 @@
 session_start();
 include "../config/db.php";
 
-// أحدث الكتب (حد أقصى 8)
+// جلب كل الكتب مرتبة من الأحدث إلى الأقدم
 $latest = mysqli_query($conn, "
     SELECT books.*, categories.name AS category_name
     FROM books
     LEFT JOIN categories ON books.category_id = categories.id
     ORDER BY books.id DESC
-    LIMIT 8
 ");
 
-// التصنيفات (حد أقصى 6)
-$categories = mysqli_query($conn, "SELECT * FROM categories LIMIT 6");
-?>
+// التصنيفات  
+$categories = mysqli_query($conn, "SELECT * FROM categories");?>
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
