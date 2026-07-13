@@ -1,0 +1,451 @@
+         body {
+            background-color: #f7f1e9; /* خلفية الصفحة البيج الفاتحة جداً */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /******************** الريسية ***********/   
+
+/********************الهيدر العلوي الأخضر الداكن ***********/   
+        .navbar-custom {
+            background-color: #003e21 !important; /* الأخضر العشبي الداكن */
+            padding: 15px 0;
+        }
+        .navbar-custom .nav-link {
+            color: #d1a153 !important; /* اللون الذهبي للنصوص */
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #fff !important;
+        }
+        .navbar-brand-text {
+            color: #d1a153 !important;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* صورة البنر الرئيسي أول الصفحة */
+        .hero-section img {
+            width: 100%;
+            max-height: 400px;   
+    object-fit: cover;
+            display: block;
+        }
+
+        /* أزرار التصنيفات الخضراء المتراصة */
+        .category-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            padding: 0 15px;
+        }
+        .category-box {
+            background-color: #003e21;
+            color: #cf9e4f; /* نص ذهبي */
+            border-radius: 12px;
+            padding: 15px 25px;
+            min-width: 140px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+        .category-box:hover {
+            color: #fff;
+            background-color: #002916;
+        }
+
+        /* كرت الكتاب المطابق للصورة */
+        .book-card-custom {
+            background-color: #fdecd2; /* لون الكرت البيج الدافئ */
+            border: 1px solid #ebd6bc;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .book-card-custom img {
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .book-card-title {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .book-card-author {
+            color: #707070;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        /* شارة التصنيف البرتقالية داخل الكرت */
+        .badge-custom {
+            background-color: #f0a824 !important; /* البرتقالي */
+            color: #333 !important;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .book-card-price {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* زر عرض التفاصيل الأخضر الداكن */
+        .btn-view-custom {
+            background-color: #003e21 !important;
+            color: #cf9e4f !important; /* نص ذهبي */
+            border: none;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+        .btn-view-custom:hover {
+            background-color: #002916 !important;
+            color: #fff !important;
+        }
+           /***************************************************************/
+
+   /************************Books***************************************/
+
+        /* أزرار التصنيفات العلوية الثابتة الخضراء */
+        .category-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        .category-box {
+            background-color: #003e21;
+            color: #cf9e4f;
+            border-radius: 12px;
+            padding: 15px 25px;
+            min-width: 140px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+        .category-box:hover, .category-box.active {
+            color: #fff;
+            background-color: #002916;
+        }
+
+        /* شريط البحث البيج المتناسق مع الصورة */
+        .search-input-custom {
+            background-color: #fdecd2 !important; /* لون البيج الدافئ الداخلي */
+            border: 1px solid #ebd6bc !important;
+            border-radius: 10px !important;
+            padding: 12px 20px !important;
+            font-size: 1.05rem;
+            color: #333;
+        }
+        .search-input-custom::placeholder {
+            color: #a68b6d;
+        }
+
+        /* زر بحث الأخضر الداكن */
+        .btn-search-custom {
+            background-color: #003e21 !important;
+            color: #cf9e4f !important;
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 12px 30px !important;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+        .btn-search-custom:hover {
+            background-color: #002916 !important;
+            color: #fff !important;
+        }
+
+        /* كروت الكتب المطابقة للصورة تماماً */
+        .book-card-custom {
+            background-color: #fdecd2; /* لون الكرت البيج الدافئ */
+            border: 1px solid #ebd6bc;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .book-card-custom img {
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .book-card-title {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .book-card-author {
+            color: #707070;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        /* شارة التصنيف البرتقالية */
+        .badge-custom {
+            background-color: #f0a824 !important;
+            color: #333 !important;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .book-card-price {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* زر عرض التفاصيل الأخضر الداكن */
+        .btn-view-custom {
+            background-color: #003e21 !important;
+            color: #cf9e4f !important;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+        .btn-view-custom:hover {
+            background-color: #002916 !important;
+            color: #fff !important;
+        }
+        /***********************booksID*********************************/
+        
+        /* حاوية تفاصيل الكتاب البيج الدافئة الداكنة */
+        
+        .details-wrapper {
+            background-color: #fdecd2; /* نفس لون الكادر الداخلي من الصورة */
+            border: 1px solid #ebd6bc;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        /* تنسيق صورة الكتاب الجانبية */
+        .book-detail-img {
+            max-height: 450px;
+            width: 100%;
+            object-fit: contain; /* لتظهر أبعاد غلاف الكتاب كاملة بدون قص */
+            background-color: transparent;
+        }
+
+        /* العناوين والبيانات */
+        .book-title-detail {
+            color: #003e21; /* لون أخضر داكن فخم للعنوان */
+            font-weight: bold;
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        .book-author-detail {
+            color: #555555;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* شارة التصنيف البرتقالية */
+        .badge-custom {
+            background-color: #f0a824 !important; /* البرتقالي */
+            color: #333 !important;
+            font-weight: bold;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        /* وصف وطبيعة الكتاب الممتد */
+        .book-description {
+            color: #3f3f3f;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-top: 20px;
+            margin-bottom: 35px;
+        }
+
+        /* أزرار الإجراءات السفلية المتطابقة مع الصورة */
+        .btn-action-container {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .btn-custom-green {
+            background-color: #003e21 !important;
+            color: #cf9e4f !important; /* نص ذهبي */
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 12px 35px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            min-width: 160px;
+            text-align: center;
+        }
+        .btn-custom-green:hover {
+            background-color: #002916 !important;
+            color: #fff !important;
+        }
+        /******************favorites**************************
+        
+        /* كروت الكتب المطابقة للتصميم البيج الدافئ */
+        .book-card-custom {
+            background-color: #fdecd2; /* لون الكرت البيج الدافئ */
+            border: 1px solid #ebd6bc;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .book-card-custom img {
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .book-card-title {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .book-card-author {
+            color: #707070;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        /* شارة التصنيف البرتقالية */
+        .badge-custom {
+            background-color: #f0a824 !important;
+            color: #333 !important;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .book-card-price {
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* زر عرض التفاصيل الأخضر الداكن */
+        .btn-view-custom {
+            background-color: #003e21 !important;
+            color: #cf9e4f !important;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 1.05rem;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+            margin-bottom: 10px;
+        }
+        .btn-view-custom:hover {
+            background-color: #002916 !important;
+            color: #fff !important;
+        }
+
+        /* زر حذف الأحمر الهادئ والمناسب للبيج */
+        .btn-delete-custom {
+            background-color: #dc3545 !important;
+            color: #ffffff !important;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        .btn-delete-custom:hover {
+            opacity: 0.9;
+            color: #fff !important;
+        }
+
+        /* صندوق التنبيه المخصص للمفارغات */
+        .alert-custom {
+            background-color: #fdecd2 !important;
+            border: 1px solid #ebd6bc !important;
+            color: #707070 !important;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            padding: 30px;
+        }
+  
+    
+ 
+ 
